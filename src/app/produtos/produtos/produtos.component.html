@@ -1,0 +1,55 @@
+<div *ngIf="produtos$ | async as produtos_local; else loading">
+  <table
+    mat-table
+    [dataSource]="produtos_local"
+    class="mat-elevation-z8"
+    style="width: 100%"
+  >
+    <!-- Nome Column -->
+    <ng-container matColumnDef="nome">
+      <th mat-header-cell *matHeaderCellDef>Nome</th>
+      <td mat-cell *matCellDef="let p">{{ p.nome }}</td>
+    </ng-container>
+
+    <!-- Descricao Column -->
+    <ng-container matColumnDef="descricao">
+      <th mat-header-cell *matHeaderCellDef>Descrição</th>
+      <td mat-cell *matCellDef="let p">{{ p.descricao }}</td>
+    </ng-container>
+
+    <!-- Action Column -->
+    <ng-container matColumnDef="acao">
+      <th mat-header-cell *matHeaderCellDef>Ação</th>
+      <td mat-cell *matCellDef="let p">
+        <button
+          mat-icon-button
+          color="primary"
+          aria-label="Editar"
+          (click)="onEdit()"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          color="warn"
+          aria-label="Remover"
+          (click)="onDelete(p.id)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+<ng-template #loading>
+  <h1>Carregando..</h1>
+</ng-template>
+
+<div style="width: 95%">
+  <button mat-fab style="float: right" color="primary" (click)="onAdd()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
